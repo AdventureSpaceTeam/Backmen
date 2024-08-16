@@ -37,12 +37,9 @@ public sealed class TTSManager
     private readonly HttpClient _httpClient = new();
 
     private ISawmill _sawmill = default!;
-    // ReSharper disable once InconsistentNaming
-    public readonly Dictionary<string, byte[]> _cache = new();
-    // ReSharper disable once InconsistentNaming
-    public readonly List<string> _cacheKeysSeq = new();
-    // ReSharper disable once InconsistentNaming
-    public int _maxCachedCount = 200;
+    private readonly Dictionary<string, byte[]> _cache = new();
+    private readonly List<string> _cacheKeysSeq = new();
+    private int _maxCachedCount = 200;
     private string _apiUrl = string.Empty;
     private string _apiToken = string.Empty;
 
@@ -55,7 +52,13 @@ public sealed class TTSManager
             ResetCache();
         }, true);
         _cfg.OnValueChanged(CCCVars.TTSApiUrl, v => _apiUrl = v, true);
-        _cfg.OnValueChanged(CCCVars.TTSApiToken, v => _apiToken = v, true);
+        // c4llv07e fix tts start
+        _cfg.OnValueChanged(CCCVars.TTSApiToken, v => {
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", v);
+            _apiToken = v;
+        }, true);
+        // c4llv07e fix tts end
     }
 
     /// <summary>
@@ -63,7 +66,7 @@ public sealed class TTSManager
     /// </summary>
     /// <param name="speaker">Identifier of speaker</param>
     /// <param name="text">SSML formatted text</param>
-    /// <returns>OGG audio bytes or null if failed</returns>
+    /// <returns>Wav audio bytes or null if failed</returns>
     public async Task<byte[]?> ConvertTextToSpeech(string speaker, string text)
     {
         WantedCount.Inc();
@@ -77,19 +80,15 @@ public sealed class TTSManager
 
         _sawmill.Verbose($"Generate new audio for '{text}' speech by '{speaker}' speaker");
 
-        var body = new GenerateVoiceRequest
-        {
-            ApiToken = _apiToken,
-            Text = text,
-            Speaker = speaker,
-        };
-
         var reqTime = DateTime.UtcNow;
         try
         {
             var timeout = _cfg.GetCVar(CCCVars.TTSApiTimeout);
             var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeout));
-            var response = await _httpClient.PostAsJsonAsync(_apiUrl, body, cts.Token);
+            // c4llv07e fix tts start
+            var response = await _httpClient.GetAsync(
+                _apiUrl + $"?speaker={speaker}&text={text}&ext=wav&effect=", cts.Token);
+            // c4llv07e fix tts end
             if (!response.IsSuccessStatusCode)
             {
                 if (response.StatusCode == HttpStatusCode.TooManyRequests)
@@ -102,8 +101,7 @@ public sealed class TTSManager
                 return null;
             }
 
-            var json = await response.Content.ReadFromJsonAsync<GenerateVoiceResponse>(cancellationToken: cts.Token);
-            var soundData = Convert.FromBase64String(json.Results.First().Audio);
+            var soundData = await response.Content.ReadAsByteArrayAsync();
 
             _cache.Add(cacheKey, soundData);
             _cacheKeysSeq.Add(cacheKey);
@@ -179,7 +177,7 @@ public sealed class TTSManager
         public int SampleRate { get; private set; } = 24000;
 
         [JsonPropertyName("format")]
-        public string Format { get; private set; } = "ogg";
+        public string Format { get; private set; } = "wav";
     }
 
     private struct GenerateVoiceResponse
