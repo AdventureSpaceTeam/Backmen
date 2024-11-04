@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -32,14 +33,17 @@ public sealed class TTSManager
         "tts_reused_count",
         "Amount of reused TTS audio from cache.");
 
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Robust.Shared.IoC.Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private readonly HttpClient _httpClient = new();
 
     private ISawmill _sawmill = default!;
-    private readonly Dictionary<string, byte[]> _cache = new();
-    private readonly List<string> _cacheKeysSeq = new();
-    private int _maxCachedCount = 200;
+    // ReSharper disable once InconsistentNaming
+    public readonly Dictionary<string, byte[]> _cache = new();
+    // ReSharper disable once InconsistentNaming
+    public readonly HashSet<string> _cacheKeysSeq = new();
+    // ReSharper disable once InconsistentNaming
+    public int _maxCachedCount = 200;
     private string _apiUrl = string.Empty;
     private string _apiToken = string.Empty;
 
@@ -137,6 +141,7 @@ public sealed class TTSManager
         _cacheKeysSeq.Clear();
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
     private string GenerateCacheKey(string speaker, string text)
     {
         var key = $"{speaker}/{text}";

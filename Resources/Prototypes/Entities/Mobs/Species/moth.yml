@@ -39,6 +39,8 @@
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#808A51"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
   - type: MothAccent
   - type: Vocal
     sounds:
@@ -120,7 +122,15 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-
+  - type: LanguageSpeaker
+    currentLanguage: TauCetiBasic
+  - type: LanguageKnowledge #backmen: languages
+    speaks:
+    - TauCetiBasic
+    - Moffic
+    understands:
+    - TauCetiBasic
+    - Moffic
 
 - type: entity
   parent: BaseSpeciesDummy

@@ -38,6 +38,11 @@
   - Trinkets
   - GroupSpeciesBreathTool
 
+# Silicons
+- type: roleLoadout
+  id: JobStationAi
+  nameDataset: names_ai
+
 # Civilian
 - type: roleLoadout
   id: JobPassenger
@@ -49,6 +54,7 @@
   - GroupTankHarness
   - PassengerJumpsuit
   - CommonBackpack
+  - PassengerNeck
   - PassengerFace
   - PassengerGloves
   - PassengerOuterClothing
@@ -146,6 +152,7 @@
   - CommonBackpack
   - Glasses
   - Medals #backmen
+  - Survival
   - Inventory # Corvax-Loadouts
   - Trinkets
   - GroupSpeciesBreathTool
@@ -239,8 +246,10 @@
   - MimeJumpsuit
   - MimeBackpack
   - MimeOuterClothing
+  - MimeBelt
   - Glasses
   - Medals #backmen
+  - SurvivalMime
   - Trinkets
 
 - type: roleLoadout
@@ -471,6 +480,7 @@
   - Medals #backmen
   - SurvivalSecurity
   - Trinkets
+  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -491,6 +501,7 @@
   - Medals #backmen
   - SurvivalSecurity
   - Trinkets
+  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -510,7 +521,9 @@
   - SecurityPocket #Backmen
   - SecurityPocket2 #Backmen
   - Medals #backmen
+  - SurvivalSecurity
   - Trinkets
+  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -531,6 +544,7 @@
   - Medals #backmen
   - SurvivalSecurity
   - Trinkets
+  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -543,6 +557,7 @@
   - SecurityCadetJumpsuit
   - SecurityBackpack
   - Medals #backmen
+  - SurvivalSecurity
   - Trinkets
   - GroupSpeciesBreathToolSecurity
 
@@ -659,6 +674,7 @@
   - CommonBackpack
   - Glasses
   - Medals #backmen
+  - Survival
   - Trinkets
   - GroupSpeciesBreathTool
 
@@ -717,6 +733,12 @@
 # They will be used without player configuration, thus they will only ever apply what is forced by MinLimit
 
 - type: roleLoadout
+  id: RoleSurvivalVoxSupport
+  groups:
+  - GroupSpeciesBreathTool
+  - GroupTankHarness
+
+- type: roleLoadout
   id: RoleSurvivalStandard
   groups:
   - Survival
@@ -756,6 +778,13 @@
   - SurvivalSyndicate
   - GroupSpeciesBreathTool
   - GroupTankHarness
+
+- type: roleLoadout
+  id: RoleSurvivalNukie
+  groups:
+  - SurvivalSyndicate
+  - GroupSpeciesBreathTool
+  - GroupPocketTankDouble
 
 - type: roleLoadout
   id: RoleSurvivalEVA

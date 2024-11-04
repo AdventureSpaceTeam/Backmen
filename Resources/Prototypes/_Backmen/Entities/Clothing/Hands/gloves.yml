@@ -27,7 +27,7 @@
     equipSound: /Audio/Backmen/Weapons/Melee/bogomol/on.ogg
     unequipSound: /Audio/Backmen/Weapons/Melee/bogomol/off.ogg
   - type: MeleeWeapon
-    attackRate: 2
+    attackRate: 3
     damage:
       types:
         Piercing: 10
@@ -103,7 +103,7 @@
   id: ActionPhaseDash
   name: phase dash
   description: Teleport to anywhere you can see.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: WorldTargetAction
     icon:

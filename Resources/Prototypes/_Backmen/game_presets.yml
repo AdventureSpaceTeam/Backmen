@@ -19,13 +19,14 @@
   - bloodsucker
   name: vampires-title
   description: vampires-description
-  showInVote: false
+  showInVote: true
   rules:
   - VampiresGameRule
   - BasicStationEventScheduler
   - WageScheduler #backmen: currency
   - SubGamemodesRule
   - BasicRoundstartVariation
+  - MeteorSwarmScheduler
 
 - type: gamePreset
   id: Blob
@@ -36,10 +37,11 @@
   showInVote: false
   rules:
   - BlobGameMode
-  - BasicStationEventScheduler
+  - CalmStationEventScheduler
   - WageScheduler #backmen: currency
   - BasicRoundstartVariation
   - SubGamemodesRule
+  - CalmMeteorSwarmScheduler
 
 - type: gamePreset
   id: FleshCult
@@ -51,10 +53,11 @@
   showInVote: false
   rules:
   - FleshCult
-  - BasicStationEventScheduler
+  - CalmStationEventScheduler
   - WageScheduler #backmen: currency
   - BasicRoundstartVariation
   - SubGamemodesRule
+  - CalmMeteorSwarmScheduler
 
 - type: gamePreset
   id: FleshCultAndTraitor
@@ -70,6 +73,7 @@
   - BasicStationEventScheduler
   - WageScheduler #backmen: currency
   - BasicRoundstartVariation
+  - MeteorSwarmScheduler
 
 - type: gamePreset
   id: NukeopsFleshCult
@@ -85,6 +89,7 @@
     - BasicStationEventScheduler
     - WageScheduler #backmen: currency
     - BasicRoundstartVariation
+    - MeteorSwarmScheduler
 
 - type: gamePreset
   id: RevolutionaryTraitor
@@ -102,6 +107,7 @@
     - Traitor
     - WageScheduler #backmen: currency
     - BasicRoundstartVariation
+    - MeteorSwarmScheduler
 
 - type: gamePreset
   id: RevolutionaryNukeops
@@ -119,6 +125,7 @@
     - Nukeops
     - WageScheduler #backmen: currency
     - BasicRoundstartVariation
+    - MeteorSwarmScheduler
 
 - type: gamePreset
   id: ZombieTraitor
@@ -138,6 +145,7 @@
   - WageScheduler #backmen: currency
   - Traitor
   - BasicRoundstartVariation
+  - MeteorSwarmScheduler
 
 - type: gamePreset
   id: ZombieNukeops
@@ -157,6 +165,7 @@
   - WageScheduler #backmen: currency
   - Nukeops
   - BasicRoundstartVariation
+  - MeteorSwarmScheduler
 
 - type: gamePreset
   id: NukeopsFleshCultTraitor
@@ -174,6 +183,7 @@
     - WageScheduler #backmen: currency
     - Traitor
     - BasicRoundstartVariation
+    - MeteorSwarmScheduler
 
 - type: gamePreset
   id: SurvivalNukeops
@@ -189,6 +199,7 @@
     - WageScheduler #backmen: currency
     - Nukeops
     - BasicRoundstartVariation
+    - MeteorSwarmScheduler
 
 
 - type: gamePreset
@@ -205,8 +216,8 @@
   - Changeling
   - SubGamemodesRule
   - BasicStationEventScheduler
-  - GameRuleMeteorScheduler
   - BasicRoundstartVariation
+  - MeteorSwarmScheduler
 
 - type: gamePreset
   id: Traitorling
@@ -222,8 +233,8 @@
   - Traitor
   - SubGamemodesRule
   - BasicStationEventScheduler
-  - GameRuleMeteorScheduler
   - BasicRoundstartVariation
+  - MeteorSwarmScheduler
 
 - type: gamePreset
   id: ExtendedThief
@@ -239,6 +250,7 @@
   - BasicStationEventScheduler
   - WageScheduler #backmen: currency
   - BasicRoundstartVariation
+  - MeteorSwarmScheduler
 
 - type: gamePreset
   id: Criminal
@@ -255,3 +267,56 @@
   - BasicStationEventScheduler
   - WageScheduler #backmen: currency
   - BasicRoundstartVariation
+  - MeteorSwarmScheduler
+
+- type: gamePreset
+  id: SuperKessler
+  alias:
+  - supermeteor
+  - bombit
+  - superkessler
+  - superkesler
+  name: super-kessler-gamemode-title
+  description: super-kessler-gamemode-description
+  showInVote: false
+  rules:
+  - BasicStationEventScheduler
+  - WageScheduler #backmen: currency
+  - BasicRoundstartVariation
+  # Oh my god.
+  - KesslerSyndromeScheduler
+  - KesslerSyndromeScheduler
+  - KesslerSyndromeScheduler
+  - MeteorSwarmMildScheduler
+  - MeteorSwarmScheduler
+  - RampingStationEventScheduler
+#  - SpaceTrafficControlEventScheduler
+#  - SpaceTrafficControlFriendlyEventScheduler
+
+- type: gamePreset
+  id: Calm
+  name: calm-title
+  showInVote: true
+  description: calm-description
+  rules:
+  - CalmStationEventScheduler
+  - WageScheduler #backmen: currency
+  - CalmMeteorSwarmScheduler
+  - BasicRoundstartVariation
+
+
+- type: gamePreset
+  id: BabelTower
+  name: babelTower-title
+  description: babelTower-description
+  minPlayers: 5
+  showInVote: true
+  rules:
+    - BabelTower
+    - CalmStationEventScheduler
+    - WageScheduler
+    - CalmMeteorSwarmScheduler
+    - BasicRoundstartVariation
+#    - SpaceTrafficControlEventScheduler
+#    - SpaceTrafficControlFriendlyEventScheduler
+    - ExtendedThief

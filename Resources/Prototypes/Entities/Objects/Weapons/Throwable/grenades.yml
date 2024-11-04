@@ -49,6 +49,8 @@
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
     canCreateVacuum: false
+  - type: SpawnOnTrigger # Ataraxia
+    proto: ExplosionEffectGrenadeShockWave
   - type: OnUseTimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
@@ -106,8 +108,26 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TimerStartBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 45
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: OnUseTimerTrigger
     delay: 5
+  - type: SpawnOnTrigger # Ataraxia
+    proto: ExplosionEffectGrenadeShockWave
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Minibomb
@@ -135,6 +155,8 @@
     intensitySlope: 30
     maxIntensity: 125
     canCreateVacuum: true
+  - type: SpawnOnTrigger # Ataraxia
+    proto: ExplosionEffectGrenadeShockWave
   - type: OnUseTimerTrigger
     delay: 4.5
     beepSound:
@@ -175,6 +197,8 @@
     sound:
       path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
       volume: 5
+  - type: SpawnOnTrigger # Ataraxia
+    proto: ExplosionEffectGrenadeShockWave
   - type: AnchorOnTrigger
     removeOnTrigger: true
   - type: TwoStageTrigger
@@ -266,6 +290,8 @@
   - type: OnUseTimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
+  - type: SpawnOnTrigger # Ataraxia
+    proto: ExplosionEffectGrenadeShockWave
   - type: Explosive
     explosionType: Default
     totalIntensity: 20000 # ~15 tile radius.
@@ -328,7 +354,7 @@
           Primed: { state: primed }
           # Unprimed: <Use state determined by enum.ConstructionVisuals.Layer>
   - type: StaticPrice
-    price: 25
+    price: 75
 
 - type: entity
   name: EMP grenade
@@ -341,6 +367,8 @@
   - type: EmpOnTrigger
     range: 5.5
     energyConsumption: 50000
+  - type: SpawnOnTrigger # Ataraxia
+    proto: ExplosionEffectGrenadeShockWave
   - type: DeleteOnTrigger
   - type: Appearance
   - type: TimerTriggerVisuals
@@ -364,6 +392,8 @@
     canCreateVacuum: true
   - type: OnUseTimerTrigger
     delay: 3 # by canon
+  - type: SpawnOnTrigger # Ataraxia
+    proto: ExplosionEffectGrenadeShockWave
   - type: PointLight
     radius: 7
     energy: 3
@@ -388,7 +418,7 @@
 # Corvax-HiddenDesc-End
           
 - type: entity
-  parent: [ GrenadeBase, BaseMinorContraband ]
+  parent: [ GrenadeBase, BaseRestrictedContraband ]
   id: SmokeGrenade
   name: smoke grenade
   description: A tactical grenade that releases a large, long-lasting cloud of smoke when used.
@@ -406,7 +436,7 @@
       path: /Audio/Items/smoke_grenade_prime.ogg
 
 - type: entity
-  parent: SmokeGrenade
+  parent: [ BaseCivilianContraband, SmokeGrenade ]
   id: CleanerGrenade
   name: cleanade
   description: Special grenade for janitors, releasing large cloud of space cleaner foam.
@@ -420,7 +450,7 @@
     solution:
       reagents:
       - ReagentId: SpaceCleaner
-        Quantity: 30
+        Quantity: 50
 
 - type: entity
   parent: SmokeGrenade
@@ -439,7 +469,7 @@
         Quantity: 50
 
 - type: entity
-  parent: SmokeGrenade
+  parent: [ BaseEngineeringContraband, SmokeGrenade ]
   id: MetalFoamGrenade
   name: metal foam grenade
   description: An emergency tool used for patching up holes. Almost as good as real walls.

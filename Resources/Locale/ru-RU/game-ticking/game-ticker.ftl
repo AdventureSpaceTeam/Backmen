@@ -33,12 +33,13 @@ player-first-join-message = Игрок { $name } зашёл на сервер в
 # Displayed in chat to admins when a player leaves
 player-leave-message = Игрок { $name } вышел!
 latejoin-arrival-announcement =
-    { $character } ({ $job }) { $gender ->
+    { $character } ({ $job }) { GENDER($entity) ->
         [male] прибыл
         [female] прибыла
         [epicene] прибыли
-       *[neuter] прибыл
+       *[neuter] прибыло
     } на станцию!
+latejoin-arrival-announcement-special = { $job } { $character } на палубе!
 latejoin-arrival-sender = Станции
 latejoin-arrivals-direction = Вскоре прибудет шаттл, который доставит вас на станцию.
 latejoin-arrivals-direction-time = Шаттл, который доставит вас на станцию, прибудет через { $time }.
@@ -46,3 +47,6 @@ latejoin-arrivals-dumped-from-shuttle = Таинственная сила не �
 latejoin-arrivals-teleport-to-spawn = Таинственная сила телепортирует вас с шаттла прибытия. Удачной смены!
 preset-not-enough-ready-players = Не удалось запустить пресет { $presetName }. Требуется { $minimumPlayers } игроков, но готовы только { $readyPlayersCount }.
 preset-no-one-ready = Не удалось запустить режим { $presetName }. Нет готовых игроков.
+game-run-level-PreRoundLobby = Лобби
+game-run-level-InRound = В раунде
+game-run-level-PostRound = После раунда

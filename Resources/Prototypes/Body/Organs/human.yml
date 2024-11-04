@@ -43,6 +43,7 @@
   - type: Sprite
     state: brain
   - type: Organ
+    slotId: brain # backmen: surgery
   - type: Input
     context: "ghost"
   - type: Brain
@@ -69,22 +70,30 @@
       - people
   - type: FoodSequenceElement
     entries:
-      burger:
-        name: food-sequence-burger-content-brain
-        sprite:
-          sprite: Mobs/Species/Human/organs.rsi
-          state: brain
-  
+      Burger: Brain
+      Taco: Brain
+  - type: Item
+    size: Small
+    heldPrefix: brain
+
 - type: entity
   id: OrganHumanEyes
   parent: BaseHumanOrgan
   name: eyes
   description: "I see you!"
   components:
+  # start-backmen: surgery
+  - type: Organ
+    slotId: eyes
+  - type: Eyes
+  # end-backmen: surgery
   - type: Sprite
     layers:
       - state: eyeball-l
       - state: eyeball-r
+  - type: Item
+    size: Small
+    heldPrefix: eyeballs
 
 - type: entity
   id: OrganHumanTongue
@@ -94,13 +103,6 @@
   components:
   - type: Sprite
     state: tongue
-  - type: FoodSequenceElement
-    entries:
-      burger:
-        name: food-sequence-burger-content-tongue
-        sprite:
-          sprite: Mobs/Species/Human/organs.rsi
-          state: tongue
 
 - type: entity
   id: OrganHumanAppendix
@@ -112,13 +114,6 @@
     - state: appendix
     - state: appendix-inflamed
       visible: false
-  - type: FoodSequenceElement
-    entries:
-      burger:
-        name: food-sequence-burger-content-appendix
-        sprite:
-          sprite: Mobs/Species/Human/organs.rsi
-          state: appendix
 
 - type: entity
   id: OrganHumanEars
@@ -128,13 +123,6 @@
   components:
   - type: Sprite
     state: ears
-  - type: FoodSequenceElement
-    entries:
-      burger:
-        name: food-sequence-burger-content-ears
-        sprite:
-          sprite: Mobs/Species/Human/organs.rsi
-          state: ears
 
 - type: entity
   id: OrganHumanLungs
@@ -146,7 +134,12 @@
     layers:
       - state: lung-l
       - state: lung-r
+  - type: Item
+    size: Small
+    heldPrefix: lungs
   - type: Lung
+  - type: Organ # backmen: surgery
+    slotId: lungs
   - type: Metabolizer
     removeEmpty: true
     solutionOnBody: false
@@ -176,6 +169,11 @@
   name: heart
   description: "I feel bad for the heartless bastard who lost this."
   components:
+  # start-backmen: surgery
+  - type: Heart
+  - type: Organ
+    slotId: heart
+  # end-backmen: surgery
   - type: Sprite
     state: heart-on
   # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
@@ -188,6 +186,9 @@
     - id: Medicine
     - id: Poison
     - id: Narcotic
+  - type: Item
+    size: Small
+    heldPrefix: heart
 
 - type: entity
   id: OrganHumanStomach
@@ -197,6 +198,9 @@
   components:
   - type: Sprite
     state: stomach
+  - type: Item
+    size: Small
+    heldPrefix: stomach
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -207,6 +211,8 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Stomach
+  - type: Organ # backmen: surgery
+    slotId: stomach
   # The stomach metabolizes stuff like foods and drinks.
   # TODO: Have it work off of the ent's solution container, and move this
   # to intestines instead.
@@ -217,13 +223,6 @@
     groups:
     - id: Food
     - id: Drink
-  - type: FoodSequenceElement
-    entries:
-      burger:
-        name: food-sequence-burger-content-stomach
-        sprite:
-          sprite: Mobs/Species/Human/organs.rsi
-          state: stomach
 
 - type: entity
   id: OrganHumanLiver
@@ -231,21 +230,22 @@
   name: liver
   description: "Pairing suggestion: chianti and fava beans."
   components:
+  # start-backmen: surgery
+  - type: Liver
+  - type: Organ
+    slotId: liver
+  # end-backmen: surgery
   - type: Sprite
     state: liver
+  - type: Item
+    size: Small
+    heldPrefix: liver
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
     maxReagents: 1
     metabolizerTypes: [Human]
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
-  - type: FoodSequenceElement
-    entries:
-      burger:
-        name: food-sequence-burger-content-liver
-        sprite:
-          sprite: Mobs/Species/Human/organs.rsi
-          state: liver
 
 - type: entity
   id: OrganHumanKidneys
@@ -257,6 +257,9 @@
     layers:
       - state: kidney-l
       - state: kidney-r
+  - type: Item
+    size: Small
+    heldPrefix: kidneys
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
   - type: Metabolizer
     maxReagents: 5
